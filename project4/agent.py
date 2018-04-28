@@ -46,10 +46,10 @@ class LearningAgent(Agent):
             self.epsilon = 0.0
             self.alpha = 0.0
         else:
-            #self.epsilon = self.epsilon -0.05
+            #self.epsilon = self.epsilon - 0.05
             self.t += 1.0
-            #self.epsilon = 1.0/(self.t**2)
-            self.epsilon = math.cos(0.00130*self.t)
+            #self.epsilon = 1.0 / ( self.t ** 2 )
+            self.epsilon = math.cos( 0.00130 * self.t)
 
         return None
 
@@ -81,7 +81,7 @@ class LearningAgent(Agent):
         ###########
         # Calculate the maximum Q-value of all actions for a given state
 
-        maxQ = max(self.Q[state].values())
+        maxQ = max ( self.Q[state].values() )
 
         return maxQ 
 
@@ -182,31 +182,41 @@ def run():
     # Create the driving agent
     # Flags:
     #   learning   - set to True to force the driving agent to use Q-learning
+    learning=True
     #    * epsilon - continuous value for the exploration factor, default is 1
+    epsilon=1.0
     #    * alpha   - continuous value for the learning rate, default is 0.5
-    agent = env.create_agent(LearningAgent,learning=True,epsilon=1.0, alpha=0.5)
+    alpha=0.5
+    agent = env.create_agent(LearningAgent,learning,epsilon, alpha)
     
     ##############
     # Follow the driving agent
     # Flags:
     #   enforce_deadline - set to True to enforce a deadline metric
-    env.set_primary_agent(agent,enforce_deadline=True)
+    enforce_deadline=True
+    env.set_primary_agent(agent,enforce_deadline)
 
     ##############
     # Create the simulation
     # Flags:
     #   update_delay - continuous time (in seconds) between actions, default is 2.0 seconds
+    update_delay=0.01
     #   display      - set to False to disable the GUI if PyGame is enabled
+    display=False
     #   log_metrics  - set to True to log trial and simulation results to /logs
+    log_metrics=True
     #   optimized    - set to True to change the default log file name
-    sim = Simulator(env,update_delay=0.001,log_metrics=True,display=False,optimized=True)
+    optimized=True
+    sim = Simulator(env,update_delay,log_metrics,display,optimized)
     
     ##############
     # Run the simulator
     # Flags:
     #   tolerance  - epsilon tolerance before beginning testing, default is 0.05 
+    tolerance=0.05
     #   n_test     - discrete number of testing trials to perform, default is 0
-    sim.run(n_test=100,tolerance=0.05)
+n_test=100
+    sim.run(n_test,tolerance)
 
 
 if __name__ == '__main__':
